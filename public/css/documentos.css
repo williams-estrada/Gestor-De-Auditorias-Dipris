@@ -1,0 +1,144 @@
+/* Google Font Import - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root{
+    /*Colores*/
+    --primary:#171717;
+    --light-primary:#777575;
+    --secondary:#272727;
+    --dark-secondary:#717070;
+}
+body {
+
+    margin: 0;
+    padding: 3rem;
+}
+.general-container {
+    width: 1550px;
+    height: auto;
+    top: 50%;
+    position: static;    
+}
+.container {
+    padding: 15px;
+    background-color: white;
+    border-radius: 6px;
+}
+.table {
+    border-collapse: collapse;
+    width: auto;
+}  
+.table td, .table tr th {
+    text-align: center;
+    border: 1px solid #ddd;
+}
+.table tr:nth-child(even){background-color: #f2f2f2;}
+.table tr:hover {background-color: #ddd;}
+.table th {
+    border-radius: 6px;
+    text-align: left;
+    background-color: var(--light-primary);
+    color: white;
+}
+
+#comentario,#estado,#archivo{
+    display: inline-flex;
+}
+#radio {
+    display: flex;
+}
+#radio div{
+    width: 80px;
+}
+#si {
+    margin-left: 20px;
+}
+#comentario button{
+    margin-left: 10px;
+}
+#comentario input[type="text"] {
+    font-size: 15px;
+    border-radius: 6px;
+    border: 1px solid var(--dark-secondary);
+    background: #FFF;
+    margin: 0 0 5px;
+    padding: 10px;
+}
+#add_document {
+    padding: 2.5px;
+    background-color: white;
+    color: var(--dark-secondary);
+    outline: none;
+    border: 3px solid var(--dark-secondary);
+    cursor: pointer;
+    font-weight: 800;
+    border-radius: 6px;
+}
+#add_document:hover {
+    background-color: var(--dark-secondary);
+    color: white;
+}
+/*barra de progreso*/
+progress[value] {
+
+    appearance: none;
+    border: none;
+    width: 100%; height: 20px;
+      background-color: whiteSmoke;
+      border-radius: 3px;
+      box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
+    position: relative;
+    margin: 0 0 1.5em; 
+  }
+  
+
+  progress[value]::-webkit-progress-bar {
+    background-color: whiteSmoke;
+    border-radius: 3px;
+    box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
+  }
+  
+  progress[value]::-webkit-progress-value {
+    position: relative;
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+    border-radius:3px;
+    animation: animate-stripes 5s linear infinite;
+  }
+  
+  @keyframes animate-stripes { 100% { background-position: -100px 0; } }
+  progress[value]::-webkit-progress-value:after {
+    content: '';
+    position: absolute;
+    
+    width:5px; height:5px;
+    top:7px; right:7px;
+    
+    background-color: white;
+    border-radius: 100%;
+  }
+  .progress-bar {
+    background-color: whiteSmoke;
+    border-radius: 3px;
+    box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
+    width: 100%; height:20px;
+  }
+  
+  .progress-bar span {
+    border-radius: 3px;
+    
+    display: block;
+    text-indent: -9999px;
+  }
+  p[data-value] { 
+    position: relative; 
+  }
+  p[data-value]:after {
+    content: attr(data-value) '%';
+    position: absolute; right:0;
+  }

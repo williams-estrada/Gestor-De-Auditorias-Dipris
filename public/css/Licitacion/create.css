@@ -1,0 +1,124 @@
+/* Google Font Import - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    /* Colores */
+    --primary: #bac8e0;
+    --light-primary: #DDE4F0;
+    --secondary: #363738;
+    --dark-secondary: #35435B;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--light-primary);
+}
+
+.general-container {
+    padding: 3rem;
+    display: grid;
+    top: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    width: 85%;
+    max-width: 1400px;
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Roboto", Helvetica, Arial, sans-serif;
+}
+
+.container {
+    max-width: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.container div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#contact input[type="text"],
+#contact input[type="email"],
+#contact input[type="tel"],
+#contact input[type="url"],
+#contact textarea,
+#contact select,
+#contact button[type="submit"] {
+    font: 400 20px/24px "Roboto", Helvetica, Arial, sans-serif;
+    width: 100%;
+    margin: 0 10px 0 0;
+    padding: 15px;
+    border-radius: 6px; /* Bordes redondeados */
+    border: 1px solid var(--dark-secondary); /* Borde para los campos */
+}
+
+#contact input[type="date"] {
+    padding: 10px;
+}
+
+#contact h3 {
+    color: black;
+    text-align: center;
+    display: block;
+    font-size: 45px;
+    font-weight: 500;
+    margin: 20px 0;
+}
+
+#contact h4 {
+    color: black;
+    margin: 4px 20px 10px 0;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+#contact button[type="submit"] {
+    padding: 15px 130px;
+    background: rgb(177, 193, 240);
+    color: var(--dark-secondary);
+    border: 2px solid var(--dark-secondary);
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+    display: block;
+    margin: 0 auto;
+    width: auto;
+    border-radius: 6px; /* Bordes redondeados para el botón */
+}
+
+#contact button[type="submit"]:hover {
+    background: blue;
+    color: white;
+}
+
+::-webkit-input-placeholder {
+    color: #888;
+}
+
+:-moz-placeholder {
+    color: #888;
+}
+
+::-moz-placeholder {
+    color: #888;
+}
+
+:-ms-input-placeholder {
+    color: #888;
+}
