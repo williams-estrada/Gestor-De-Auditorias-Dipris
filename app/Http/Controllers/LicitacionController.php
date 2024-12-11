@@ -383,5 +383,13 @@ class LicitacionController extends Controller
         //$licitacion->save();
         //return redirect()->route("licitacion.all");
     }
+
+    public function put(Request $request, string $id) {
+        $licitacion_encontrada = Licitacion::find($id);
+        $licitacion_encontrada->estado = 'pendiente_out';
+        if($licitacion_encontrada->update() == true){
+            return redirect()->route("licitacion.all");
+        }
+    }
 }
 

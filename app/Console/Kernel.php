@@ -4,9 +4,13 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use DateTimeZone;
 
 class Kernel extends ConsoleKernel
 {
+    protected $commands = [
+        Commands\LicitacionExpiracionCommand::class,
+    ];
     /**
      * Define the application's command schedule.
      *
@@ -16,6 +20,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+
+        $schedule->command('licitacion:expiracion')->everyMinute();
     }
 
     /**
@@ -28,5 +34,11 @@ class Kernel extends ConsoleKernel
         $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');
+    }
+
+
+    protected function scheduleTimezone(): DateTimeZone|string|null
+    {
+        return 'America/Guayaquil';
     }
 }

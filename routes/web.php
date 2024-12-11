@@ -62,6 +62,10 @@ Route::post('/licitacion-busqueda-folio', [LicitacionController::class, 'buscarF
 ->middleware('auth')
 ->name('licitacion.busquedaFolio');
 
+Route::put('/licitacion-put/{id}',[LicitacionController::class,'put'])
+->middleware('auth')
+->name('licitacion.update');
+
 /*ruta para los documentos*/
 Route::get('/documentos/{id}', [DocumentosController::class, 'create'])
 ->middleware('auth')
@@ -86,6 +90,13 @@ Route::get('/documentos-aplica/{id}', [DocumentosController::class, 'aplicavista
 Route::put('/documentos-aplica-store/{id}', [DocumentosController::class, 'aplica'])
 ->middleware('auth')
 ->name('documentos.aplica-store');
+
+Route::post('/documentos-comentario/{id}', [DocumentosController::class, 'comentario'])
+->middleware('auth')->name('documentos-comentario');
+
+Route::post('/documentos-aplica-todos', [DocumentosController::class, 'aplicaTodos'])
+->middleware('auth')
+->name('documentos.aplica-todos-store');
 
 /*rutas para los usuarios*/
 Route::get('/usuarios',[UsuariosController::class,'index'])

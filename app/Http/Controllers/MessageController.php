@@ -30,9 +30,16 @@ class MessageController extends Controller
                                 ->get();
         }
 
-        $mensajes = Message::where("to_user_id", auth()->user()->id)
-                            ->orderBy("created_at", "DESC")
-                            ->paginate(5);;
+        if(auth()->user()->tipo_usuario == "Cliente"){ 
+            $mensajes = Message::where("to_user_id", auth()->user()->id)
+                                ->orderBy("created_at", "DESC")
+                                ->paginate(5);;
+
+        } else {
+            $mensajes = Message::orderBy("created_at", "DESC")
+                                ->paginate(5);;            
+        }
+
         
         return view('Program.Mensaje.index', compact('usuarios', 'mensajes'));
     }

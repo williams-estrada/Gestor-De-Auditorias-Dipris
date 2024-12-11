@@ -30,7 +30,7 @@ body {
     background-color: white;
     border-radius: 6px;
 }
-.table {
+/* .table {
     border-collapse: collapse;
     width: auto;
 }  
@@ -45,7 +45,7 @@ body {
     text-align: left;
     background-color: var(--light-primary);
     color: white;
-}
+} */
 
 #comentario,#estado,#archivo{
     display: inline-flex;
@@ -79,6 +79,7 @@ body {
     cursor: pointer;
     font-weight: 800;
     border-radius: 6px;
+    font-size: 12px !important;
 }
 #add_document:hover {
     background-color: var(--dark-secondary);

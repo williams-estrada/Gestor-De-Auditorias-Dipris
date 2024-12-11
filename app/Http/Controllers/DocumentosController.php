@@ -9,6 +9,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 //use Illuminate\Foundation\Application;
+use Illuminate\Http\Response;
+use App\Models\Usuarios;
+use App\Models\Message;
 
 class DocumentosController extends Controller
 {
@@ -531,12 +534,12 @@ class DocumentosController extends Controller
             $documento_encontrado->informacion_estado = "";
             $documento_encontrado->ruta_documento = "";
             $documento_encontrado->habilitado = 1;
-            if($request->post('comentario') == null){
-                $documento_encontrado->comentario = "";
-            }
-            else{
-                $documento_encontrado->comentario = $request->post('comentario');//
-            }
+            // if($request->post('comentario') == null){
+            //     $documento_encontrado->comentario = "";
+            // }
+            // else{
+            //     $documento_encontrado->comentario = $request->post('comentario');//
+            // }
             $documento_encontrado->update();
 
             $licitacion_encontrada = Licitacion::find($documento_encontrado->licitacion_id);
@@ -604,12 +607,12 @@ class DocumentosController extends Controller
             //----------------------------------------------------------------------------
 
             //Comentario
-            if($request->post('comentario') == null){
-                $documento_encontrado->comentario = "";
-            }
-            else{
-                $documento_encontrado->comentario = $request->post('comentario');//
-            }
+            // if($request->post('comentario') == null){
+            //     $documento_encontrado->comentario = "";
+            // }
+            // else{
+            //     $documento_encontrado->comentario = $request->post('comentario');//
+            // }
             //----------------------------------------------------------------------------
 
             $documento_encontrado->update();
@@ -632,7 +635,20 @@ class DocumentosController extends Controller
             }
             
             if ($licitacion_encontrada->cantidad_aplica == $licitacion_encontrada->progreso_aplica){
-                $licitacion_encontrada->estado ="completada";
+                if ($licitacion_encontrada->estado === 'pendiente_out' ) {
+                    $licitacion_encontrada->estado = "completada_out";
+                }else {
+                    $licitacion_encontrada->estado ="completada";
+                }
+
+                $usuario = Usuarios::Where('tipo_usuario', 'Administrador')->first();
+                $mensaje_nuevo = new Message();
+                $mensaje_nuevo->titulo = "Licitacion Folio No. {$licitacion_encontrada->folio} Completada";
+                $mensaje_nuevo->contenido = "Licitacion Folio No. {$licitacion_encontrada->folio} Completada";
+                $mensaje_nuevo->user_id = $licitacion_encontrada->usuario_id;
+                $mensaje_nuevo->to_user_id = $usuario->id;
+                
+                $mensaje_nuevo->save();
             }
             $licitacion_encontrada->update();
 
@@ -829,12 +845,64 @@ class DocumentosController extends Controller
         //return redirect()->route("licitacion.index",$id);
     }
 
-    public function upload(Request $request)
-{
-    $this->validate($request, [
-        'file_input_name' => 'required|file|max:62000', // Tamaño en kilobytes (6200MB)
-    ]);
+    public function upload(Request $request){
+        $this->validate($request, [
+            'file_input_name' => 'required|file|max:62000', // Tamaño en kilobytes (6200MB)
+        ]);
 
-    // Procesa la carga del archivo aquí
-}
+        // Procesa la carga del archivo aquí
+    }
+
+    public function comentario (Request $request, string $id){
+        $mensaje = "";
+        try {
+            $documento_encontrado = Documentos::find($id);
+
+            if($request->post('comentario') == null){
+                $documento_encontrado->comentario = "";
+            }
+            else{
+                $documento_encontrado->comentario = $request->post('comentario');
+            }
+            $documento_encontrado->update();
+            $mensaje = "Comentario guardado correctamente...!";
+        } catch (\Exception $ex) {
+            $mensaje = $e->getMessagge();
+        }
+
+        return response()->json([
+            'message'   => $mensaje,
+        ], Response::HTTP_OK);
+    }
+
+    public function aplicaTodos (Request $request){
+        
+        $datos = $request->post('datos');
+
+        foreach ($datos as $key => $value) {
+            $aplica = $value['aplica'];
+
+            if (!empty($aplica) ) {
+                $documento_encontrado = Documentos::find(intval($value['id']));
+                $documento_encontrado->aplica = $aplica;
+    
+                if($aplica === "si"){
+                    $licitacion_encontrada = Licitacion::find($documento_encontrado->licitacion_id);
+                    $cantidad = intval($licitacion_encontrada->cantidad_aplica)+1;
+                    $licitacion_encontrada->cantidad_aplica = $cantidad;
+                    $licitacion_encontrada->save();  
+                }
+                if($aplica === "no"){
+                    $licitacion_encontrada = Licitacion::find($documento_encontrado->licitacion_id);
+                    $cantidad = intval($licitacion_encontrada->cantidad_aplica)-1;
+                    $licitacion_encontrada->cantidad_aplica = $cantidad;
+                    $licitacion_encontrada->save();  
+                }
+                $documento_encontrado->save(); 
+            }
+        }
+        return response()->json([
+            'message'   => "Ok",
+        ], Response::HTTP_OK);
+    }
 }

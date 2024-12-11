@@ -18,4 +18,5 @@
 ## Procesos de consola
 ```bash
     php artisan licitacion:expiracion
+    php artisan schedule:work
 ```
